@@ -63,11 +63,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({ tweet: tweet })
             });
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            const data = await response.json().catch(() => ({}));
 
-            const data = await response.json();
+            if (!response.ok) {
+                alert(data.error || 'An error occurred while analyzing the tweet. Please try again.');
+                return;
+            }
 
             if (data.error) {
                 alert('Error: ' + data.error);
